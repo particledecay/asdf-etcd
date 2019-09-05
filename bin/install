@@ -35,11 +35,11 @@ install() {
         mkdir -p "${bin_install_path}"
 
         extracted=
-        if [[ $download_path == "*.tar.gz" ]]; then
+        if [[ $download_path == *.tar.gz ]]; then
             echo "Extracting ${toolname} tar archive"
             tar xv --strip-components=2 -C "$bin_install_path" -f "${download_path}" "$(basename -s .tar.gz "$download_path")/$toolname"
             [ $? -eq 0 ] && extracted=true
-        elif [[ $download_path == "*.zip" ]]; then
+        elif [[ $download_path == *.zip ]]; then
             echo "Extracting ${toolname} zip archive"
             unzip -d "$bin_install_path" "${download_path}" "$(basename -s .zip "$download_path")/$toolname"
             [ $? -eq 0 ] && extracted=true
