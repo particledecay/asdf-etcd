@@ -47,6 +47,7 @@ install() {
         if [ ! $extracted ]; then
             echo "Error: did not properly extract ${toolname} from archive"
             exit 1
+        fi
     else
         echo "Error: ${toolname} version ${version} not found" >&2
         exit 1
