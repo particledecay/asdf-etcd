@@ -37,7 +37,7 @@ install() {
         echo "Extracting ${toolname} archive"
         if [[ $download_path == "*.tar.gz" ]]; then
             tar xv --strip-components=2 -C "$bin_install_path" -f "${download_path}" "$(basename -s .tar.gz "$download_path")/$toolname"
-        else if [[ $download_path == "*.zip" ]]; then
+        elif [[ $download_path == "*.zip" ]]; then
             unzip -d "$bin_install_path" "${download_path}" "$(basename -s .zip "$download_path")/$toolname"
         fi
 
