@@ -34,7 +34,7 @@ install() {
         echo "Creating ${toolname} bin directory"
         mkdir -p "${bin_install_path}"
 
-        extracted=false
+        extracted=
         if [[ $download_path == "*.tar.gz" ]]; then
             echo "Extracting ${toolname} tar archive"
             tar xv --strip-components=2 -C "$bin_install_path" -f "${download_path}" "$(basename -s .tar.gz "$download_path")/$toolname"
@@ -44,7 +44,7 @@ install() {
             unzip -d "$bin_install_path" "${download_path}" "$(basename -s .zip "$download_path")/$toolname"
             [ $? -eq 0 ] && extracted=true
         fi
-        if [ ! $extracted ]; then
+        if [ -z $extracted ]; then
             echo "Error: did not properly extract ${toolname} from archive"
             exit 1
         fi
