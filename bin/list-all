@@ -12,5 +12,5 @@ if [ -n "${OAUTH_TOKEN:-}" ]; then
     cmd="$cmd -H 'Authorization: token $OAUTH_TOKEN'"
 fi
 cmd="$cmd https://api.github.com/repos/$repository/releases"
-versions=$(eval $cmd | jq -r '.[].tag_name' | xargs)
+versions=$(eval $cmd | jq -r '.[].tag_name' | sort --version-sort | xargs)
 echo $versions
