@@ -55,7 +55,12 @@ get_download_url() {
     local -r version="$1"
     local -r arch="$(get_arch)"
     # we have to do this because some downloads are .tar.gz and some are .zip files
-    local -r url="$(curl -s https://api.github.com/repos/$repository/releases | jq -r --arg version "$version" --arg arch "$arch" --arg repo "$repository" ".[] | select(.tag_name==$version).assets[] | select(.name | contains($arch + '-amd64')).browser_download_url")"
+    local -r url="$(curl -s https://api.github.com/repos/$repository/releases |\
+                    jq -r \
+                    --arg version "$version" \
+                    --arg arch "$arch" \
+                    --arg repo "$repository" \
+                    '.[] | select(.tag_name==$version).assets[] | select(.name | contains($arch + "-amd64")).browser_download_url')"
     echo $url
 }
 
