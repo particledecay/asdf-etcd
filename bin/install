@@ -67,7 +67,7 @@ get_download_url() {
                     --arg version "$version" \
                     --arg arch "$arch" \
                     --arg repo "$repository" \
-                    '.[] | select(.tag_name==$version).assets[] | select(.name | contains($arch + "-amd64")).browser_download_url')"
+                    '.[] | select(.tag_name==$version).assets[] | select((.name | contains($arch + "-amd64")) and ((.browser_download_url | endswith(".tar.gz")) or (.browser_download_url | endswith(".zip")))).browser_download_url')"
     echo $url
 }
 
