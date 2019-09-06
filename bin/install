@@ -66,6 +66,7 @@ get_download_url() {
     if [ -n "${OAUTH_TOKEN:-}" ]; then
         cmd="$cmd -H 'Authorization: token $OAUTH_TOKEN'"
     fi
+    echo "$cmd"
     local -r github_output="$($cmd https://api.github.com/repos/$repository/releases)"
     echo "$github_output"
     local -r url="$(echo $github_output |\
