@@ -7,6 +7,14 @@ addons:
     packages:
       - jq
     update: true
+
+before_cache:
+  - if [ "${TRAVIS_OS_NAME}" = "osx" ]; then brew cleanup; fi
+cache:
+  directories:
+    - $HOME/Library/Caches/Homebrew
+    - /usr/local/Homebrew
+
 script: asdf plugin-test etcdctl $TRAVIS_BUILD_DIR 'etcdctl version'
 before_script:
   - git clone https://github.com/asdf-vm/asdf.git asdf
