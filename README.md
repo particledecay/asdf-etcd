@@ -1,4 +1,4 @@
-# asdf-etcdctl
+# asdf-etcdctl [![Build Status](https://travis-ci.org/particledecay/asdf-etcdctl.svg?branch=master)](https://travis-ci.org/particledecay/asdf-etcdctl)
 etcdctl plugin for asdf version manager https://github.com/asdf-vm/asdf
 
 ## Requirements
