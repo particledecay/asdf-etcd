@@ -41,7 +41,7 @@ install() {
             [ $? -eq 0 ] && extracted=true
         elif [[ $download_path == *.zip ]]; then
             echo "Extracting ${toolname} zip archive"
-            unzip -d "$bin_install_path" "${download_path}" "$(basename -s .zip "$download_path")/$toolname" 2> /dev/null
+            unzip -jd "$bin_install_path" "${download_path}" "$(basename -s .zip "$download_path")/$toolname" 2> /dev/null
             [ $? -eq 0 ] && extracted=true
         fi
         if [ -z $extracted ]; then
