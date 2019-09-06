@@ -1,7 +1,7 @@
 language: c
 script: asdf plugin-test etcdctl $TRAVIS_BUILD_DIR 'etcdctl version' --asdf-tool-version v3.4.0
 before_script:
-  - git clone https://github.com/particledecay/asdf-etcdctl.git asdf
+  - git clone https://github.com/asdf-vm/asdf.git asdf
   - . asdf/asdf.sh
 os:
   - linux
