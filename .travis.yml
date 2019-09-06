@@ -1,4 +1,9 @@
 language: c
+addons:
+  apt:
+    packages: jq
+  homebrew:
+    packages: jq
 script: asdf plugin-test etcdctl $TRAVIS_BUILD_DIR 'etcdctl version' --asdf-tool-version v3.4.0
 before_script:
   - git clone https://github.com/asdf-vm/asdf.git asdf
