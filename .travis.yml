@@ -15,7 +15,7 @@ cache:
     - $HOME/Library/Caches/Homebrew
     - /usr/local/Homebrew
 
-script: asdf plugin-test etcdctl $TRAVIS_BUILD_DIR 'etcdctl version'
+script: asdf plugin-test etcdctl $TRAVIS_BUILD_DIR 'etcdctl version' --asdf-tool-version $(asdf list-all etcdctl | head -1)
 before_script:
   - git clone https://github.com/asdf-vm/asdf.git asdf
   - . asdf/asdf.sh
