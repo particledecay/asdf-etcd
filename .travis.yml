@@ -1,9 +1,11 @@
 language: c
 addons:
   apt:
-    packages: jq
+    packages:
+      - jq
   homebrew:
-    packages: jq
+    packages:
+      - jq
     update: true
 script: asdf plugin-test etcdctl $TRAVIS_BUILD_DIR 'etcdctl version' --asdf-tool-version v3.4.0
 before_script:
