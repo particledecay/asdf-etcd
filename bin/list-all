@@ -7,10 +7,16 @@ set \
 
 readonly repository="etcd-io/etcd"
 
-cmd="curl -s"
-if [ -n "${OAUTH_TOKEN:-}" ]; then
-    cmd="$cmd -H 'Authorization: token $OAUTH_TOKEN'"
+CURL="curl -s"
+if [ -n "${OAUTH_TOKEN:-}" ];
+then
+  CURL="$CURL -H 'Authorization: token $OAUTH_TOKEN'"
 fi
-cmd="$cmd https://api.github.com/repos/$repository/releases"
-versions=$(eval $cmd | jq -r '.[].tag_name' | sort --version-sort -r | xargs)
-echo $versions
+
+sort_versions() {
+  sed 'h; s/[+-]/./g; s/.p\([[:digit:]]\)/.z\1/; s/$/.z/; G; s/\n/ /' |
+    LC_ALL=C sort -t. -k 1,1 -k 2,2n -k 3,3n -k 4,4n -k 5,5n | awk '{print $2}'
+}
+
+versions=$($CURL -fsL "https://api.github.com/repos/$repository/releases" | grep tag_name | sed 's/"tag_name": //g;s/"//g;s/,//g;s/v//g')
+echo "$versions" | sort_versions | xargs
