@@ -69,7 +69,7 @@ get_download_url() {
     cmd="$cmd https://api.github.com/repos/$repository/releases"
     local -r url=$(eval $cmd |\
                    jq -r \
-                   --arg version "$version" \
+                   --arg version "v$version" \
                    --arg arch "$arch" \
                    '.[] | select(.tag_name==$version).assets[] | select((.name | contains($arch + "-amd64")) and ((.browser_download_url | endswith(".tar.gz")) or (.browser_download_url | endswith(".zip")))).browser_download_url')
     echo $url
