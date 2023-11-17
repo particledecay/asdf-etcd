@@ -19,7 +19,15 @@ download_release "$ASDF_INSTALL_VERSION" "$release_file"
 
 #  Extract contents of tar.gz file into the download directory
 if [[ "$os_name" == "darwin" ]]; then
-	unzip "$release_file" -d "$ASDF_DOWNLOAD_PATH" || fail "Could not extract $release_file"
+	# include hidden files
+	shopt -s dotglob
+	dir_name="$(basename -s .zip "$release_file")"
+	tool_cmd="$(echo "$TOOL_TEST" | cut -d' ' -f1)"
+	# strip-components but for zip files
+	(unzip "$release_file" -d "$ASDF_DOWNLOAD_PATH" "${dir_name}/${tool_cmd}" &&
+		mv "${ASDF_DOWNLOAD_PATH}/${dir_name}/${tool_cmd}" "$ASDF_DOWNLOAD_PATH/" &&
+		rmdir "${ASDF_DOWNLOAD_PATH}/${dir_name}") ||
+		fail "Could not extract $release_file"
 else
 	tar -xzf "$release_file" -C "$ASDF_DOWNLOAD_PATH" --strip-components=1 || fail "Could not extract $release_file"
 fi
