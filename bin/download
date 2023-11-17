@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+current_script_path=${BASH_SOURCE[0]}
+plugin_dir=$(dirname "$(dirname "$current_script_path")")
+
+# shellcheck source=./lib/utils.bash
+source "${plugin_dir}/lib/utils.bash"
+
+mkdir -p "$ASDF_DOWNLOAD_PATH"
+
+os_name=$(get_os)
+file_ext=$([[ "$os_name" == "darwin" ]] && echo "zip" || echo "tar.gz")
+release_file="$ASDF_DOWNLOAD_PATH/$TOOL_NAME-v$ASDF_INSTALL_VERSION-${os_name}-$(get_arch).${file_ext}"
+
+# Download tar.gz file to the download directory
+download_release "$ASDF_INSTALL_VERSION" "$release_file"
+
+#  Extract contents of tar.gz file into the download directory
+if [[ "$os_name" == "darwin" ]]; then
+	unzip "$release_file" -d "$ASDF_DOWNLOAD_PATH" || fail "Could not extract $release_file"
+else
+	tar -xzf "$release_file" -C "$ASDF_DOWNLOAD_PATH" --strip-components=1 || fail "Could not extract $release_file"
+fi
+
+# Remove the tar.gz file since we don't need to keep it
+rm "$release_file"
